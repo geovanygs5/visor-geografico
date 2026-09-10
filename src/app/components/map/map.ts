@@ -37,7 +37,6 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   private mapReady = false;
 
   constructor() {
-    // Reacciona a cambios de hoveredId / selectedId
     effect(() => {
       const hovered = this.selectionService.hoveredId();
       const selected = this.selectionService.selectedId();
@@ -49,7 +48,6 @@ export class MapComponent implements AfterViewInit, OnDestroy {
       }
     });
 
-    // Reacciona a cambios en la lista de terremotos
     effect(() => {
       const eqs = this.earthquakes;
       void eqs;
@@ -76,13 +74,11 @@ export class MapComponent implements AfterViewInit, OnDestroy {
       maxCanvasSize: [8192, 8192],
     });
 
-    // 🔥 ESTE BLOQUE ES EL QUE FALTABA
     this.map.on('load', () => {
       this.addEarthquakeSource();
       this.setupClickEvents();
       this.mapReady = true;
 
-      // Actualizar datos iniciales
       this.updateEarthquakeSource();
       this.updateFeatureStates();
 
@@ -180,7 +176,6 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   }
 
   private setupClickEvents(): void {
-    // Click sobre un punto
     this.map.on('click', this.LAYER_ID, (e: MapLayerMouseEvent) => {
       if (e.features && e.features.length > 0) {
         const feature = e.features[0];
@@ -194,7 +189,6 @@ export class MapComponent implements AfterViewInit, OnDestroy {
       }
     });
 
-    // Hover
     this.map.on('mouseenter', this.LAYER_ID, () => {
       this.map.getCanvas().style.cursor = 'pointer';
     });
@@ -203,7 +197,6 @@ export class MapComponent implements AfterViewInit, OnDestroy {
       this.map.getCanvas().style.cursor = 'default';
     });
 
-    // Click en el vacío → limpiar
     this.map.on('click', (e: MapLayerMouseEvent) => {
       const features = this.map.queryRenderedFeatures(e.point, {
         layers: [this.LAYER_ID]

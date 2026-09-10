@@ -11,7 +11,6 @@ export class SelectionService {
   private hoveredIdSignal = signal<string | null>(null);
   public hoveredId = this.hoveredIdSignal.asReadonly();
 
-  // NUEVO: guarda el objeto completo del sismo seleccionado
   private selectedEarthquakeSignal = signal<Earthquake | null>(null);
   public selectedEarthquake = this.selectedEarthquakeSignal.asReadonly();
 

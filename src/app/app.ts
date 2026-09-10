@@ -86,7 +86,7 @@ export class App implements OnInit {
   onEarthquakeSelect(id: string): void {
     const earthquake = this.earthquakeService.earthquakes().find(eq => eq.id === id);
     if (earthquake) {
-      this.selectionService.selectEarthquake(earthquake);  // ← Objeto completo
+      this.selectionService.selectEarthquake(earthquake);  
     }
     if (this.mapComponent) {
       this.mapComponent.flyToEarthquake(id);
